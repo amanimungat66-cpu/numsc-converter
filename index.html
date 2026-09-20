@@ -1,0 +1,501 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>NumSC Converter</title>
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+<div class="app">
+
+<header>
+
+    <div class="brand">
+
+        <div class="logo">
+            101
+        </div>
+
+        <div>
+            <h1>NumSC Converter</h1>
+            <p>Binary · Octal · Decimal · Hexadecimal</p>
+        </div>
+
+    </div>
+
+    <div class="header-actions">
+
+        <button
+            class="icon-btn"
+            onclick="toggleTheme()"
+            title="Change theme">
+            ◐
+        </button>
+
+    </div>
+
+</header>
+
+
+<div class="grid">
+
+<!-- MAIN -->
+
+<div class="card">
+
+    <div class="card-title">
+
+        <h2>Number Converter</h2>
+
+        <span class="status">
+            ● Ready
+        </span>
+
+    </div>
+
+
+    <div class="converter-row">
+
+        <div>
+
+            <label>From</label>
+
+            <select id="from">
+
+                <option value="2">Binary — Base 2</option>
+
+                <option value="8">Octal — Base 8</option>
+
+                <option value="10" selected>
+                    Decimal — Base 10
+                </option>
+
+                <option value="16">
+                    Hexadecimal — Base 16
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <button
+            class="swap"
+            onclick="swapSystems()"
+            title="Swap systems">
+
+            ⇄
+
+        </button>
+
+
+        <div>
+
+            <label>To</label>
+
+            <select id="to">
+
+                <option value="2">
+                    Binary — Base 2
+                </option>
+
+                <option value="8">
+                    Octal — Base 8
+                </option>
+
+                <option value="10">
+                    Decimal — Base 10
+                </option>
+
+                <option value="16" selected>
+                    Hexadecimal — Base 16
+                </option>
+
+            </select>
+
+        </div>
+
+    </div>
+
+
+    <div class="input-area">
+
+        <label>Input number</label>
+
+        <div class="input-wrap">
+
+            <input
+                id="inputNumber"
+                type="text"
+                placeholder="Enter a number..."
+                autocomplete="off">
+
+            <button
+                class="clear-input"
+                onclick="clearInput()">
+                ×
+            </button>
+
+        </div>
+
+        <div class="hint" id="hint">
+            Allowed: 0–9
+        </div>
+
+    </div>
+
+
+    <div class="quick">
+
+        <div class="quick-title">
+            Quick examples
+        </div>
+
+        <div class="quick-values">
+
+            <button onclick="setValue('10')">10</button>
+
+            <button onclick="setValue('25')">25</button>
+
+            <button onclick="setValue('45')">45</button>
+
+            <button onclick="setValue('100')">100</button>
+
+            <button onclick="setValue('255')">255</button>
+
+            <button onclick="setValue('1024')">1024</button>
+
+        </div>
+
+    </div>
+
+
+    <div class="result">
+
+        <div class="result-top">
+
+            <span id="resultTitle">
+                Result · Hexadecimal
+            </span>
+
+            <button
+                class="copy"
+                onclick="copyResult()">
+                Copy
+            </button>
+
+        </div>
+
+        <div
+            class="result-value"
+            id="result">
+            —
+        </div>
+
+    </div>
+
+
+    <div class="actions">
+
+        <button
+            class="action convert"
+            onclick="convertNumber()">
+            Convert
+        </button>
+
+        <button
+            class="action clear"
+            onclick="clearAll()">
+            Clear
+        </button>
+
+    </div>
+
+
+    <div
+        class="steps"
+        id="steps">
+
+        <div class="card-title">
+            <h2>Conversion steps</h2>
+        </div>
+
+        <div id="stepsContent"></div>
+
+    </div>
+
+
+    <div class="guide">
+
+        
+<button class="guide-button" onclick="toggleGuide()">
+    <span class="guide-icon">?</span>
+
+    <span class="guide-text">
+        <strong>Learn Number Systems</strong>
+        <small>Understand Binary, Octal, Decimal & Hexadecimal</small>
+    </span>
+
+    <span class="guide-arrow">→</span>
+</button>
+
+
+        <div
+            class="guide-content"
+            id="guide">
+
+            <div class="guide-item">
+
+                <h4>Binary — Base 2</h4>
+
+                <p>
+                    Uses only 0 and 1.
+                    Example: 101101₂ = 45₁₀.
+                </p>
+
+            </div>
+
+            <div class="guide-item">
+
+                <h4>Octal — Base 8</h4>
+
+                <p>
+                    Uses digits from 0 to 7.
+                    Example: 55₈ = 45₁₀.
+                </p>
+
+            </div>
+
+            <div class="guide-item">
+
+                <h4>Decimal — Base 10</h4>
+
+                <p>
+                    Uses digits from 0 to 9.
+                    It is the standard everyday number system.
+                </p>
+
+            </div>
+
+            <div class="guide-item">
+
+                <h4>Hexadecimal — Base 16</h4>
+
+                <p>
+                    Uses 0–9 and A–F.
+                    A = 10, B = 11, C = 12,
+                    D = 13, E = 14 and F = 15.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- SIDE -->
+
+<div>
+
+    <div class="side-card">
+
+        <h3>Number Systems</h3>
+
+        <div class="system">
+
+            <div class="system-name">
+
+                <div class="base">2</div>
+
+                <div>
+                    <strong>Binary</strong>
+                    <br>
+                    <small>Base 2</small>
+                </div>
+
+            </div>
+
+            <span>01</span>
+
+        </div>
+
+
+        <div class="system">
+
+            <div class="system-name">
+
+                <div class="base">8</div>
+
+                <div>
+                    <strong>Octal</strong>
+                    <br>
+                    <small>Base 8</small>
+                </div>
+
+            </div>
+
+            <span>0–7</span>
+
+        </div>
+
+
+        <div class="system">
+
+            <div class="system-name">
+
+                <div class="base">10</div>
+
+                <div>
+                    <strong>Decimal</strong>
+                    <br>
+                    <small>Base 10</small>
+                </div>
+
+            </div>
+
+            <span>0–9</span>
+
+        </div>
+
+
+        <div class="system">
+
+            <div class="system-name">
+
+                <div class="base">16</div>
+
+                <div>
+                    <strong>Hex</strong>
+                    <br>
+                    <small>Base 16</small>
+                </div>
+
+            </div>
+
+            <span>0–F</span>
+
+        </div>
+
+    </div>
+
+
+    <div class="side-card history">
+
+        <div class="card-title">
+
+            <h3>History</h3>
+
+            <span id="historyCount">
+                0
+            </span>
+
+        </div>
+
+        <div
+            class="history-list"
+            id="historyList">
+
+            <div class="empty">
+                No conversions yet.
+            </div>
+
+        </div>
+
+
+        <div class="history-actions">
+
+            <button
+                class="small-btn"
+                onclick="clearHistory()">
+                Clear
+            </button>
+
+            <button
+                class="small-btn"
+                onclick="downloadHistory()">
+                Export
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- FOOTER -->
+
+<footer class="footer">
+
+    <div class="footer-top">
+
+        <div>
+            <div class="footer-logo">
+                <span>101</span>
+                <strong>NumSC Converter</strong>
+            </div>
+
+            <p>
+                A simple and powerful number system
+                converter for students, developers and
+                computer science learners.
+            </p>
+        </div>
+
+        <div class="footer-links">
+
+            <a href="#" onclick="scrollToTop(); return false;">
+                Home
+            </a>
+
+            <a href="#"
+               onclick="toggleGuide(); return false;">
+                Guide
+            </a>
+
+            <a href="#"
+               onclick="clearAll(); return false;">
+                Converter
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <div class="footer-bottom">
+
+        <span>
+            © 2026 NumSC Converter. All rights reserved.
+        </span>
+
+        <span>
+            Built for learning & coding purposes.
+        </span>
+
+    </div>
+
+</footer>
+
+
+<div
+    class="toast"
+    id="toast">
+    Copied!
+</div>
+<script src="script.js"></script>
+</body>
+</html>
